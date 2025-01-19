@@ -1,7 +1,7 @@
-export const metadata = {
-  title: "App Router",
-};
+import "../styles/globals.css";
 
-export default function Page() {
-  return <h1>App Router</h1>;
+import { PerfectFaroShuffle3D } from '../components/PerfectFaroShuffle3D'
+
+export default function Home() {
+  return <PerfectFaroShuffle3D />
 }
