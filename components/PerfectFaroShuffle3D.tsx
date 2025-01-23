@@ -149,8 +149,8 @@ export const PerfectFaroShuffle3D: React.FC = () => {
         </Canvas>
       </div>
       <div className="flex space-x-4">
-        <button onClick={shuffle} className="mb-2" disabled={isShuffling}>シャッフル</button>
-        <button onClick={reset} className="mb-2" disabled={isShuffling}>リセット</button>
+        <button type="button" onClick={shuffle} className="mb-2" disabled={isShuffling}>シャッフル</button>
+        <button type="button" onClick={reset} className="mb-2" disabled={isShuffling}>リセット</button>
       </div>
       <p className="text-lg">シャッフル回数: {shuffleCount}</p>
     </div>
