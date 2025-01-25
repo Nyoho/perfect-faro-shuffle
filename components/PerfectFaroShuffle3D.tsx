@@ -27,7 +27,7 @@ const perfectFaroShuffle = (deck: { suit: string; value: string; number: number 
   return shuffled
 }
 
-const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
 
 export const PerfectFaroShuffle3D: React.FC = () => {
   const [deck, setDeck] = useState(createDeck().map((card, index) => ({ ...card, number: index + 1 })))
