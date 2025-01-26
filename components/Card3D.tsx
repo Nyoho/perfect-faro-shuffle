@@ -27,8 +27,10 @@ export const Card3D: React.FC<Card3DProps> = ({ position, rotation, suit, value,
       ref={groupRef}
       position={pos}
       rotation={rot.to((x, y, z) => [x, y, z])}
+      castShadow
+      receiveShadow
     >
-      <mesh>
+      <mesh castShadow receiveShadow>
         <boxGeometry args={[0.7, 1, 0.01]} />
         <meshStandardMaterial color="white" />
         <Text
