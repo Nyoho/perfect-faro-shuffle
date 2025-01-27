@@ -134,8 +134,8 @@ export const PerfectFaroShuffle3D: React.FC = () => {
       <h1 className="text-3xl font-bold mb-4">3Dパーフェクトファロシャッフル</h1>
       <div className="w-full h-[80vh] mb-4">
         <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
-          <ambientLight intensity={0.98} castShadow />
           <mesh castShadow receiveShadow position={[0, -0.5, 0]}>
+          <ambientLight intensity={0.7} />
             <boxGeometry args={[5, 0.01, 5]} />
             <meshStandardMaterial color="#50d8e4" />
           </mesh>
