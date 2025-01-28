@@ -36,7 +36,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
   const shuffleStageRef = useRef(0)
 
   const getCardPosition = (index: number, totalCards: number, stage: number, progress: number) => {
-    const baseY = -totalCards * 0.025 + index * 0.05
+    const baseY = 0
     const baseZ = totalCards * 0.025 - index * 0.05
 
     if (stage === 0) {
@@ -47,11 +47,11 @@ export const PerfectFaroShuffle3D: React.FC = () => {
       const half = Math.floor(totalCards / 2)
       const isFirstHalf = index < half
       const startX = 0
-      const endX = isFirstHalf ? -1.5 : 1.5
+      const endX = isFirstHalf ? -1.0 : 1.0
       const startY = baseY
-      const endY = isFirstHalf ? index * 0.05 : (index - half) * 0.05
+      const endY = 0
       const startZ = baseZ
-      const endZ = 0
+      const endZ = baseZ
 
       const t = easeInOutCubic(progress)
       const x = startX + (endX - startX) * t
@@ -62,16 +62,17 @@ export const PerfectFaroShuffle3D: React.FC = () => {
       const arcHeight = isFirstHalf ? 0.5 : -0.5
       const arc = Math.sin(t * Math.PI) * arcHeight
 
-      return [x, y + arc, z]
+      return [x, y, z]
     }
 
-    const newIndex = perfectFaroShuffle(deck.map((_, i) => i))[index]
-    const startX = index < totalCards / 2 ? -1.5 : 1.5
-    const startY = index < totalCards / 2 ? index * 0.05 : (index - totalCards / 2) * 0.05
-    const startZ = 0
+    const half = Math.floor(totalCards / 2)
+    const isFirstHalf = index < half
+    const startX = isFirstHalf ? -1.0 : 1.0
+    const startY = 0
+    const startZ = baseZ
     const endX = 0
-    const endY = -totalCards * 0.025 + newIndex * 0.05
-    const endZ = totalCards * 0.025 - newIndex * 0.05
+    const endY = 0
+    const endZ = totalCards * 0.025 - (isFirstHalf ? (2 * index + 1) : (index - half) * 2) * 0.05
 
     const t = easeInOutCubic(progress)
     const x = startX + (endX - startX) * t
@@ -82,8 +83,8 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     const arcHeight = 0.5
     const arc = Math.sin(t * Math.PI) * arcHeight
 
-    return [x, y + arc, z]
-}
+    return [x, y, z]
+  }
 
   const shuffle = useCallback(() => {
     if (isShuffling) return
@@ -92,9 +93,9 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     shuffleStageRef.current = 1
 
     const animationDuration = 1000 // 1 second for each stage
-    const startTime = Date.now()
 
     const animateStage = (stage: number) => {
+      const startTime = Date.now()
       const animate = () => {
         const now = Date.now()
         const progress = Math.min(1, (now - startTime) / animationDuration)
@@ -108,10 +109,10 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           requestAnimationFrame(animate)
         } else if (stage === 1) {
           shuffleStageRef.current = 2
-          setDeck(perfectFaroShuffle(deck)) //Corrected this line
           setTimeout(() => animateStage(2), 0)
         } else {
           setIsShuffling(false)
+          setDeck(perfectFaroShuffle(deck))
           shuffleStageRef.current = 0
           setShuffleCount(prev => prev + 1)
         }
