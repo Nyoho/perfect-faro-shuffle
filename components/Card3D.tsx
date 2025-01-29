@@ -55,7 +55,7 @@ export const Card3D: React.FC<Card3DProps> = ({ position, rotation, suit, value,
       </mesh>
       <Text
         position={[0.4, 0, 0.006]}
-        fontSize={0.15}
+        fontSize={0.08}
         color="black"
         anchorX="left"
         anchorY="middle"
