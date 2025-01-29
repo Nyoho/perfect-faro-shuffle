@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useCallback, useRef } from 'react'
+import type React from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Card3D } from './Card3D'
