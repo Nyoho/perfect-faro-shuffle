@@ -133,15 +133,15 @@ export const PerfectFaroShuffle3D: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-4">3Dパーフェクトファロシャッフル</h1>
+      <h1 className="text-3xl font-bold mb-4">Perfect Faro Shuffle</h1>
       <div className="w-full h-[80vh] mb-4">
         <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
-          <mesh castShadow receiveShadow position={[0, -0.5, 0]}>
           <ambientLight intensity={0.7} />
+          <mesh castShadow receiveShadow position={[0, -0.6, 0]}>
             <boxGeometry args={[5, 0.01, 5]} />
             <meshStandardMaterial color="#50d8e4" />
           </mesh>
-          <directionalLight position={[5, 10, 5]} intensity={0.5} castShadow />
+          <directionalLight position={[10, 10, 20]} intensity={0.5} castShadow />
           <pointLight position={[10, 10, 10]} castShadow />
           {deck.map((card, index) => (
             <Card3D
