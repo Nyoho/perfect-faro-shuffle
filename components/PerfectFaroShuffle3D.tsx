@@ -73,12 +73,13 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     const startZ = baseZ
     const endX = 0
     const endY = 0
-    const endZ = totalCards * 0.025 - (isFirstHalf ? (2 * index + 1) : (index - half) * 2) * 0.05
+    const newIndex = isFirstHalf ? (2 * index + 1) : (index - half) * 2
+    const endZ = totalCards * 0.025 - newIndex * 0.05
 
     const t = easeInOutCubic(progress)
     const x = startX + (endX - startX) * t
     const y = startY + (endY - startY) * t
-    const z = startZ + (endZ - startZ) * t
+    const z = startZ + (endZ - startZ) * (t ** 0.16)
 
     // Add a slight arc to the movement
     const arcHeight = 0.5
