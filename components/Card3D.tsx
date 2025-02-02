@@ -16,17 +16,16 @@ interface Card3DProps {
 export const Card3D: React.FC<Card3DProps> = ({ position, rotation, suit, value, index, number }) => {
   const groupRef = useRef<THREE.Group>(null!)
 
-  const { pos, rot } = useSpring({
+  const { pos, rot } = {
     pos: position,
     rot: rotation,
-    config: { mass: 1, tension: 180, friction: 12 }
-  })
+  }
 
   return (
     <animated.group
       ref={groupRef}
       position={pos}
-      rotation={rot.to((x, y, z) => [x, y, z])}
+      rotation={rot}
       castShadow
       receiveShadow
     >
