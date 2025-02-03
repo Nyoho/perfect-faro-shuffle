@@ -30,11 +30,11 @@ export const Card3D: React.FC<Card3DProps> = ({ position, rotation, suit, value,
       receiveShadow
     >
       <mesh castShadow receiveShadow>
-        <boxGeometry args={[0.7, 1, 0.01]} />
+        <boxGeometry args={[0.7, 1, 0.005]} />
         <meshStandardMaterial color="white" />
         <Text
           position={[0, 0, 0.006]}
-          fontSize={0.15}
+          fontSize={0.2}
           color="black"
           anchorX="center"
           anchorY="middle"
@@ -43,7 +43,7 @@ export const Card3D: React.FC<Card3DProps> = ({ position, rotation, suit, value,
         </Text>
         <Text
           position={[0, 0, -0.006]}
-          fontSize={0.15}
+          fontSize={0.2}
           color="black"
           anchorX="center"
           anchorY="middle"
