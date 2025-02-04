@@ -107,7 +107,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     setIsShuffling(true)
     shuffleStageRef.current = 1
 
-    const animationDuration = 1000 // 1 second for each stage
+    const animationDuration = 300
 
     const animateStage = (stage: number) => {
       const startTime = Date.now()
