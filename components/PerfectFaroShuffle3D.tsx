@@ -11,8 +11,14 @@ import * as THREE from 'three'
 const suits = ['♠', '♥', '♣', '♦']
 const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 
-const createDeck = () => {
-  return suits.flatMap(suit => values.map(value => ({ suit, value })))
+const createDeck = (): Card[] => {
+  return suits.flatMap(suit =>
+    values.map((value, i) => ({
+      suit,
+      value,
+      number: i + 1,
+    }))
+  )
 }
 
 const perfectFaroShuffle = (deck: { suit: string; value: string; number: number }[]) => {
@@ -30,13 +36,20 @@ const perfectFaroShuffle = (deck: { suit: string; value: string; number: number 
 
 const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2
 
+interface Card {
+  suit: string
+  value: string
+  number: number
+  position?: [number, number, number]
+}
+
 export const PerfectFaroShuffle3D: React.FC = () => {
-  const [deck, setDeck] = useState(createDeck().map((card, index) => ({ ...card, number: index + 1 })))
+  const [deck, setDeck] = useState(createDeck())
   const [shuffleCount, setShuffleCount] = useState(0)
   const [isShuffling, setIsShuffling] = useState(false)
   const shuffleStageRef = useRef(0)
 
-  const getCardPosition = (index: number, totalCards: number, stage: number, progress: number) => {
+  const getCardPosition = (index: number, totalCards: number, stage: number, progress: number): [number, number, number] => {
     const baseY = 0
     const baseZ = totalCards * 0.025 - index * 0.05
 
