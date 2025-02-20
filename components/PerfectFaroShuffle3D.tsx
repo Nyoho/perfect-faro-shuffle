@@ -11,14 +11,15 @@ import * as THREE from 'three'
 const suits = ['♠', '♥', '♣', '♦']
 const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 
-const createDeck = (): Card[] => {
-  return suits.flatMap(suit =>
+const createDeck = (size = 52): Card[] => {
+  const fullDeck = suits.flatMap(suit =>
     values.map((value, i) => ({
       suit,
       value,
-      number: i + 1,
     }))
-  )
+  ).map((a,i) => ({...a, number: i + 1}))
+  
+  return fullDeck.slice(0, size)
 }
 
 const perfectFaroShuffle = (deck: { suit: string; value: string; number: number }[]) => {
