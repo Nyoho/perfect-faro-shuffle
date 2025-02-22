@@ -1,11 +1,10 @@
 'use client'
 
 import type React from 'react'
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, ChangeEvent } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Card3D } from './Card3D'
-// import { Button } from '@/components/ui/button'
 import * as THREE from 'three'
 
 const suits = ['♠', '♥', '♣', '♦']
@@ -22,12 +21,11 @@ const createDeck = (size = 52): Card[] => {
   return fullDeck.slice(0, size)
 }
 
-const perfectFaroShuffle = (deck: { suit: string; value: string; number: number }[]) => {
+function perfectFaroShuffle(deck: Card[]) {
   const half = Math.floor(deck.length / 2)
   const firstHalf = deck.slice(0, half)
   const secondHalf = deck.slice(half)
-  const shuffled = []
-
+  const shuffled: Card[] = []
   for (let i = 0; i < half; i++) {
     shuffled.push(secondHalf[i], firstHalf[i])
   }
@@ -45,12 +43,13 @@ interface Card {
 }
 
 export const PerfectFaroShuffle3D: React.FC = () => {
-  const [deck, setDeck] = useState(createDeck())
+  const [deckSize, setDeckSize] = useState(52)
+  const [deck, setDeck] = useState(createDeck(deckSize))
   const [shuffleCount, setShuffleCount] = useState(0)
   const [isShuffling, setIsShuffling] = useState(false)
   const shuffleStageRef = useRef(0)
 
-  const getCardPosition = (index: number, totalCards: number, stage: number, progress: number): [number, number, number] => {
+  const getCardPosition = useCallback((index: number, totalCards: number, stage: number, progress: number): [number, number, number] => {
     const baseY = 0
     const baseZ = totalCards * 0.025 - index * 0.05
 
@@ -100,7 +99,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     const arc = Math.sin(t * Math.PI) * arcHeight
 
     return [x, y, z]
-  }
+  }, [])
 
   const shuffle = useCallback(() => {
     if (isShuffling) return
@@ -140,15 +139,33 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     animateStage(1)
   }, [deck, isShuffling])
 
-  const reset = useCallback(() => {
-    setDeck(createDeck().map((card, index) => ({ ...card, number: index + 1 })))
+  const reset = useCallback((size: number) => {
+    setDeck(createDeck(size))
     setShuffleCount(0)
     shuffleStageRef.current = 0
-  }, [])
+  }, [deckSize])
+
+  const handleDeckSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value
+
+    const num = parseInt(input, 10)
+    if (!isNaN(num) && num > 0 && num % 2 === 0) {
+      setDeckSize(num)
+      reset(num)
+    }
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <h1 className="text-3xl font-bold mb-4">Perfect Faro Shuffle</h1>
+      <div className="mb-4">
+        <label className="mr-2 font-semibold">カード枚数 (偶数で):</label>
+        <input
+          type="text"
+          className="border rounded px-2 py-1"
+          onChange={handleDeckSizeChange}
+        />
+      </div>
       <div className="w-full h-[80vh] mb-4">
         <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
           <ambientLight intensity={0.7} />
@@ -173,8 +190,22 @@ export const PerfectFaroShuffle3D: React.FC = () => {
         </Canvas>
       </div>
       <div className="flex space-x-4">
-        <button type="button" onClick={shuffle} className="mb-2" disabled={isShuffling}>シャッフル</button>
-        <button type="button" onClick={reset} className="mb-2" disabled={isShuffling}>リセット</button>
+        <button
+          type="button"
+          onClick={shuffle}
+          className="mb-2 px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50"
+          disabled={isShuffling}
+        >
+          シャッフル
+        </button>
+        <button
+          type="button"
+          onClick={() => reset(deckSize)}
+          className="mb-2 px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 disabled:opacity-50"
+          disabled={isShuffling}
+        >
+          リセット
+        </button>
       </div>
       <p className="text-lg">シャッフル回数: {shuffleCount}</p>
     </div>
