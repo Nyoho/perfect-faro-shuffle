@@ -166,7 +166,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           onChange={handleDeckSizeChange}
         />
       </div>
-      <div className="w-full h-[80vh] mb-4">
+      <div className="w-full h-[70vh] mb-4">
         <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
           <ambientLight intensity={0.7} />
           <mesh castShadow receiveShadow position={[0, -0.6, 0]}>
