@@ -11,14 +11,19 @@ const suits = ['♠', '♥', '♣', '♦']
 const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
 
 const createDeck = (size = 52): Card[] => {
-  const fullDeck = suits.flatMap(suit =>
-    values.map((value, i) => ({
+  const baseDeck: Omit<Card, 'number'>[] = suits.flatMap(suit =>
+    values.map(value => ({
       suit,
       value,
     }))
-  ).map((a,i) => ({...a, number: i + 1}))
+  )
   
-  return fullDeck.slice(0, size)
+  const deck: Card[] = []
+  for (let i = 0; i < size; i++) {
+    const card = baseDeck[i % baseDeck.length]
+    deck.push({ ...card, number: i + 1 })
+  }
+  return deck
 }
 
 function perfectFaroShuffle(deck: Card[]) {
