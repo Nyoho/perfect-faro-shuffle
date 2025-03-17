@@ -131,8 +131,13 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           shuffleStageRef.current = 2
           setTimeout(() => animateStage(2), 0)
         } else {
+          const shuffledDeck = perfectFaroShuffle(deck);
+          setDeck(deck.map((card, index) => ({
+            ...shuffledDeck[index],
+            position: card.position
+          })));
+  
           setIsShuffling(false)
-          setDeck(perfectFaroShuffle(deck))
           shuffleStageRef.current = 0
           setShuffleCount(prev => prev + 1)
         }
