@@ -187,7 +187,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           <pointLight position={[10, 10, 10]} castShadow />
           {deck.map((card, index) => (
             <Card3D
-              key={`${card.suit}-${card.value}-${index}`}
+              key={card.number}
               suit={card.suit}
               value={card.value}
               position={card.position || getCardPosition(index, deck.length, shuffleStageRef.current, 0)}
