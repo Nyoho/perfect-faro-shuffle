@@ -17,7 +17,7 @@ const createDeck = (size = 52): Card[] => {
       value,
     }))
   )
-  
+
   const deck: Card[] = []
   for (let i = 0; i < size; i++) {
     const card = baseDeck[i % baseDeck.length]
@@ -49,6 +49,8 @@ interface Card {
 
 export const PerfectFaroShuffle3D: React.FC = () => {
   const [deckSize, setDeckSize] = useState(52)
+  const [deckSizeInput, setDeckSizeInput] = useState(String(deckSize))
+  const [sizeError, setSizeError] = useState('')
   const [deck, setDeck] = useState(createDeck(deckSize))
   const [shuffleCount, setShuffleCount] = useState(0)
   const [isShuffling, setIsShuffling] = useState(false)
@@ -136,7 +138,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
             ...shuffledDeck[index],
             position: card.position
           })));
-  
+
           setIsShuffling(false)
           shuffleStageRef.current = 0
           setShuffleCount(prev => prev + 1)
@@ -165,6 +167,34 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     }
   }
 
+  const handleDeckSizeInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value
+    setDeckSizeInput(input)
+
+    if (input === '' || isNaN(parseInt(input, 10))) {
+      setSizeError('')
+      return;
+    }
+
+    const num = parseInt(input, 10)
+    if (num > 0 && num % 2 === 0) {
+      setSizeError('')
+      setDeckSize(num)
+      reset(num)
+    } else {
+      setSizeError('そこは偶数でひとつ🙏')
+    }
+  };
+
+  const handleDeckSizeBlur = () => {
+    const num = parseInt(deckSizeInput, 10)
+
+    if (isNaN(num) || num <= 0 || num % 2 !== 0) {
+      setDeckSizeInput(String(deckSize))
+      setSizeError('')
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <h1 className="text-3xl font-bold mb-4">Perfect Faro Shuffle</h1>
@@ -172,9 +202,12 @@ export const PerfectFaroShuffle3D: React.FC = () => {
         <label className="mr-2 font-semibold">カード枚数 (偶数で):</label>
         <input
           type="text"
-          className="border rounded px-2 py-1"
-          onChange={handleDeckSizeChange}
+          className={`border rounded px-2 py-1 ${sizeError ? 'border-red-500' : ''}`}
+          value={deckSizeInput}
+          onChange={handleDeckSizeInputChange}
+          onBlur={handleDeckSizeBlur}
         />
+        {sizeError && <span className="ml-2 text-red-500 text-sm">{sizeError}</span>}
       </div>
       <div className="w-full h-[70vh] mb-4">
         <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
