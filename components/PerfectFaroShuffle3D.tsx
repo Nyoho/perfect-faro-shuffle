@@ -199,15 +199,19 @@ export const PerfectFaroShuffle3D: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <h1 className="text-3xl font-bold mb-4">Perfect Faro Shuffle</h1>
       <div className="mb-4">
-        <label className="mr-2 font-semibold">カード枚数 (偶数で):</label>
-        <input
-          type="text"
-          className={`border rounded px-2 py-1 ${sizeError ? 'border-red-500' : ''}`}
-          value={deckSizeInput}
-          onChange={handleDeckSizeInputChange}
-          onBlur={handleDeckSizeBlur}
-        />
-        {sizeError && <span className="ml-2 text-red-500 text-sm">{sizeError}</span>}
+        <div className="flex items-center">
+          <label className="mr-2 font-semibold">カード枚数 (偶数で):</label>
+          <input
+            type="text"
+            className={`text-center w-[5em] border rounded px-2 py-1 ${sizeError ? 'border-red-500' : ''}`}
+            value={deckSizeInput}
+            onChange={handleDeckSizeInputChange}
+            onBlur={handleDeckSizeBlur}
+          />
+        </div>
+        <div className="h-4 mt-1 text-right">
+          {sizeError && <span className="ml-2 text-red-500 text-sm">{sizeError}</span>}
+        </div>
       </div>
       <div className="w-full h-[70vh] mb-4">
         <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
