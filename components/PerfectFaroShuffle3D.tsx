@@ -214,7 +214,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
         </div>
       </div>
       <div className="w-full h-[70vh] mb-4">
-        <Canvas camera={{ position: [0, 5, 10], fov: 50 }} shadows>
+        <Canvas camera={{ position: [-2, 5, 3], fov: 50 }} shadows>
           <ambientLight intensity={0.7} />
           <mesh castShadow receiveShadow position={[0, -0.6, 0]}>
             <boxGeometry args={[5, 0.01, 5]} />
