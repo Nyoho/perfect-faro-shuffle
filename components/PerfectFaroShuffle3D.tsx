@@ -196,14 +196,14 @@ export const PerfectFaroShuffle3D: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-4">Perfect Faro Shuffle</h1>
-      <div className="mb-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-2 md:p-4">
+      <h1 className="text-xl md:text-3xl font-bold mb-2 md:mb-4">Perfect Faro Shuffle</h1>
+      <div className="mb-2 md:mb-4">
         <div className="flex items-center">
           <label className="mr-2 font-semibold">カード枚数 (偶数で):</label>
           <input
             type="text"
-            className={`text-center w-[5em] border rounded px-2 py-1 ${sizeError ? 'border-red-500' : ''}`}
+            className={`text-center w-full md:w-[5em] border rounded px-2 py-1 ${sizeError ? 'border-red-500' : ''}`}
             value={deckSizeInput}
             onChange={handleDeckSizeInputChange}
             onBlur={handleDeckSizeBlur}
@@ -213,7 +213,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           {sizeError && <span className="ml-2 text-red-500 text-sm">{sizeError}</span>}
         </div>
       </div>
-      <div className="w-full h-[70vh] mb-4">
+      <div className="w-full h-[60vh] md:h-[70vh] mb-2 md:mb-4">
         <Canvas camera={{ position: [2, 3, 3], fov: 50 }} shadows>
           <ambientLight intensity={0.7} />
           <mesh castShadow receiveShadow position={[0, -0.6, 0]}>
@@ -240,7 +240,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
         <button
           type="button"
           onClick={shuffle}
-          className="mb-2 px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50"
+          className="mb-1 md:mb-2 px-3 md:px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 disabled:opacity-50"
           disabled={isShuffling}
         >
           シャッフル
@@ -248,14 +248,13 @@ export const PerfectFaroShuffle3D: React.FC = () => {
         <button
           type="button"
           onClick={() => reset(deckSize)}
-          className="mb-2 px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 disabled:opacity-50"
+          className="mb-1 md:mb-2 px-3 md:px-4 py-2 rounded bg-green-500 text-white hover:bg-green-600 disabled:opacity-50"
           disabled={isShuffling}
         >
           リセット
         </button>
       </div>
-      <p className="text-lg">シャッフル回数: {shuffleCount}</p>
+      <p className="text-sm md:text-lg">シャッフル回数: {shuffleCount}</p>
     </div>
   )
 }
-
