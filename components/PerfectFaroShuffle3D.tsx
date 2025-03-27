@@ -213,7 +213,7 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           {sizeError && <span className="ml-2 text-red-500 text-sm">{sizeError}</span>}
         </div>
       </div>
-      <div className="w-full h-[60vh] md:h-[70vh] mb-2 md:mb-4">
+      <div className="w-full h-[50vh] md:h-[70vh] mb-2 md:mb-4">
         <Canvas camera={{ position: [2, 3, 3], fov: 50 }} shadows>
           <ambientLight intensity={0.7} />
           <mesh castShadow receiveShadow position={[0, -0.6, 0]}>
