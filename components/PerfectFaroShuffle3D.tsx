@@ -213,7 +213,11 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           {sizeError && <span className="ml-2 text-red-500 text-sm">{sizeError}</span>}
         </div>
       </div>
-      <div className="w-full h-[50vh] md:h-[70vh] mb-2 md:mb-4">
+      <div className="w-full h-[50vh] md:h-[70vh] mb-2 md:mb-4 relative">
+        <div className="absolute top-4 right-4 bg-white/70 px-3 py-2 rounded shadow z-10 text-center">
+          <div>shuffle</div>
+          <div><strong>{shuffleCount}</strong> 回</div>
+        </div>
         <Canvas camera={{ position: [2, 3, 3], fov: 50 }} shadows>
           <ambientLight intensity={0.7} />
           <mesh castShadow receiveShadow position={[0, -0.6, 0]}>
@@ -254,7 +258,6 @@ export const PerfectFaroShuffle3D: React.FC = () => {
           リセット
         </button>
       </div>
-      <p className="text-sm md:text-lg">シャッフル回数: {shuffleCount}</p>
     </div>
   )
 }
